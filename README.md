@@ -1,0 +1,3 @@
+# ObjectSeekerX
+
+LWC Component
