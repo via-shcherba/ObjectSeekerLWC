@@ -1,10 +1,10 @@
 # Object SeekerX LWC Component
 
-You can seek any object on your organization and choose it
-Component limited by profile
-Also you can pass on object name, that won't availible in picklist
-When you make choose, this component sends an event with object API name to
-the parent component
+You can seek any object on your organization and choose it  
+Component limited by profile  
+Also you can pass on object name, that won't availible in picklist  
+When you make choose, this component sends an event with object API name to  
+the parent component  
 
 EXAMPLE 1:
 
