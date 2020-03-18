@@ -9,33 +9,43 @@ export default class ObjectSeekerX extends LightningElement {
     @track isDisabled;
     @track value;
     @track apiObjectName;
-    @api removedObjectName;
+    @api removedObjectsNames;
 
     @wire(getAllObjectsNames) wiredObjectsNames({data, error}) {
         if (data) {
-            this.allObjectsFromApex = data;
+            let preparedData = [];
+            data.forEach(element => {
+                preparedData.push({ 'label' : element.label, 'name' : element.name });
+            });
+            this.allObjectsFromApex = preparedData;
         }
         if (error) {
-            this.value = 'Conncetion error with Apex!';
+            this.value = 'Error ' + error;
+        }
+    }
+
+    removeElements() {
+        if (this.removedObjectsNames) {
+            this.removedObjectsNames.forEach((elemToDelete) => {
+                this.allObjectsFromApex.forEach((elemExist, index) => {
+                    if (elemToDelete.toLowerCase() === elemExist.name.toLowerCase()) {
+                        this.allObjectsFromApex.splice(index, 1);
+                    }
+                });
+            });
         }
     }
 
     enterKey(evtent) {
+        this.removeElements();
         let _searchResults = [];
         this.queryTerm = evtent.target.value;
         this.queryTermWithQuotes = '"' + this.queryTerm + '"';
         let size = this.queryTerm.length;
-        this.allObjectsFromApex.forEach((elem, index) => {
+        this.allObjectsFromApex.forEach((elem) => {
             if (elem.label.length >= size) {
-                if (this.removedObjectName) {
-                    if (this.queryTerm.toLowerCase() === elem.label.slice(0, size).toLowerCase()
-                        && this.removedObjectName.toLowerCase() !== elem.name.toLowerCase()) {
-                        _searchResults.push({'label' : elem.label, 'name' : elem.name});
-                    }
-                } else {
-                    if (this.queryTerm.toLowerCase() === elem.label.slice(0, size).toLowerCase()) {
-                        _searchResults.push({'label' : elem.label, 'name' : elem.name});
-                    }
+                if (this.queryTerm.toLowerCase() === elem.label.slice(0, size).toLowerCase()) {
+                    _searchResults.push(elem);
                 }
             }
         });
