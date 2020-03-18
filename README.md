@@ -1,9 +1,33 @@
-# Salesforce App
+# Object SeekerX LWC Component
 
-## Dev, Build and Test
+You can seek any object on your organization and choose it  
+Component limited by profile  
+Also you can pass on object name, that won't availible in picklist  
+When you make choose, this component sends an event with object API name to  
+the parent component  
 
-## Resources
+EXAMPLE 1:
 
-## Description of Files and Directories
+<c-object-seeker-x onsetobjectname={setObjectNameFirst}></c-object-seeker-x>
 
-## Issues
+setObjectNameFirst(event) {
+    let objectName = event.detail;
+}
+ 
+EXAMPLE 2:
+
+<c-object-seeker-x removed-object-name={removedObjectName}
+    onsetobjectname={setObjectNameFirst}
+    >
+</c-object-seeker-x>
+
+@track removedObjectName = 'Contact';
+
+setObjectNameFirst(event) {
+    let objectName = event.detail;
+}
+
+
+## Designed by via.shcherba
+16/03/2020
+
